@@ -13,10 +13,12 @@ import os
 engine = tts.init()
 engine.setProperty('voice', 0)
 
+
 # Função de Síntese de Voz #
 def speak(text):
     engine.say(text)
     engine.runAndWait()
+
 
 # Preparando modelo (Base de reconhecimento) e reconhecedor #
 model = Model("models")
