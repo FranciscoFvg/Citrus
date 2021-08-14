@@ -1,63 +1,30 @@
+# Imports adicionais #
 import pyttsx3 as tts
 import speech_recognition as sr
 import sys
-import time
 
-#Config's
-engine = tts.init()
-engine.setProperty('voice', 0)
+# Imports obrigatórios #
+from vosk import Model, KaldiRecognizer
+import pyaudio
+import os
 
+# Preparando modelo (Base de reconhecimento) e reconhecedor #
+model = Model("models")
+rec = KaldiRecognizer(model, 16000)
 
-# Função para ouvir e reconhecer a fala
-def ouvir_microfone():
-    # Habilita o microfone do usuário
-    microfone = sr.Recognizer()
-    frase = ''
+# Configurando propriedades do microfone de captura #
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
+stream.start_stream()
 
-    # usando o microfone
-    with sr.Microphone() as source:
-
-        # Chama um algoritmo de reducao de ruidos no som
-        microfone.adjust_for_ambient_noise(source)
-
-        # Frase para o usuario dizer algo
-        print("Diga alguma coisa: ")
-
-        # Armazena o que foi dito numa variavel
-        audio = microfone.listen(source)
-
-    try:
-
-        # Passa a variável para o algoritmo reconhecedor de padroes
-        frase = microfone.recognize_google(audio, language='pt-BR')
-
-        # Retorna a frase pronunciada
-        print("Você disse: " + frase)
-
-    # Se nao reconheceu o padrao de fala, exibe a mensagem
-    except Exception as e:
-        print("\033[1;31mNão entendi. Erro: ", e)
-
-    return frase
-
-aname = 'citrus'
-
-#Execução
+# Ouvindo #
 while True:
-    print('\033[m')
-    texto = ouvir_microfone()
-    texto = texto.lower()
-    if aname in texto:
-        ordem = texto[(len(aname)+1):]
-        ordem = ordem.lower()
-
-        if 'desligar' in ordem:
-            print(ordem)
-            engine.say('Desligando assistente virtual!')
-            engine.runAndWait()
-            sys.exit()
-        print(ordem)
-        engine.say(ordem)
-        engine.runAndWait()
+    data = stream.read(4000)
+    if len(data) == 0:
+        break
+    if rec.AcceptWaveform(data):
+        print(rec.Result())
     else:
-        print('sem correpondencia')
+        print(rec.PartialResult())
+
+print(rec.FinalResult())
