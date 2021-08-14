@@ -1,12 +1,22 @@
 # Imports adicionais #
-import pyttsx3 as tts
 import speech_recognition as sr
 import sys
 
 # Imports obrigatórios #
 from vosk import Model, KaldiRecognizer
+import pyttsx3 as tts
 import pyaudio
+import json
 import os
+
+# Inicializando Componentes de Síntese#
+engine = tts.init()
+engine.setProperty('voice', 0)
+
+# Função de Síntese de Voz #
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
 
 # Preparando modelo (Base de reconhecimento) e reconhecedor #
 model = Model("models")
@@ -23,8 +33,11 @@ while True:
     if len(data) == 0:
         break
     if rec.AcceptWaveform(data):
-        print(rec.Result())
-    else:
-        print(rec.PartialResult())
+        result = rec.Result()
+        result = json.loads(result)
 
-print(rec.FinalResult())
+        if result is not None:
+            text = result['text']
+
+            print(text)
+            speak(text)
