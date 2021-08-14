@@ -1,6 +1,6 @@
-<h1 align="center">Experimentando Códigos Python</h1>
+<h1 align="center">TRON</h1>
 
-Repositório criado para guardar alguns experimentos e testes com códigos e Libs python.
+Assitente Virtual Simplificada e Personalizável criada em Python.
 
 Lista de pacotes usados no ambiente de testes:
 <ul>
