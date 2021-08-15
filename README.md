@@ -1,4 +1,4 @@
-<h1 align="center">TRON</h1>
+<h1 align="center">Citrus</h1>
 
 Assitente Virtual Simplificada e Personalizável criada em Python.
 
@@ -6,7 +6,7 @@ Requerimentos:
 <ul>
 <li>Reconhecedor de Voz: Google (online) e Vosk (offline)</li>
 <li>Síntese de Voz: Pyttsx3</li>
-<li>Inteligência Artificial</li>
+<li>Inteligência Artificial: NLU</li>
 <li>------------------------</li>
 <li>------------------------</li>
 </ul>
@@ -20,7 +20,7 @@ Lista de pacotes usados no ambiente de testes:
 <li>pipwin install pyaudio</li>
 <li>pip install pytube</li>
 <li>pip install vosk</li>
-<li>pip install pytube</li>
+<li>pip install pyyaml</li>
 <li>pip install pytube</li>
 <li>pip install pytube</li>
 </ul>
