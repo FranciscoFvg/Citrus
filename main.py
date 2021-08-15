@@ -1,8 +1,7 @@
-# Imports adicionais #
-import speech_recognition as sr
-import sys
+# Imports internos #
+from core import SystemInfo as sysinfo
 
-# Imports obrigatórios #
+# Imports externos #
 from vosk import Model, KaldiRecognizer
 import pyttsx3 as tts
 import pyaudio
@@ -29,9 +28,9 @@ p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
 stream.start_stream()
 
-# Ouvindo #
+# Loop do reconhecedor #
 while True:
-    data = stream.read(4000)
+    data = stream.read(4000, exception_on_overflow = False)
     if len(data) == 0:
         break
     if rec.AcceptWaveform(data):
@@ -42,4 +41,6 @@ while True:
             text = result['text']
 
             print(text)
-            speak(text)
+
+            if text == 'que horas são' or text == 'me diga as horas':
+                speak(sysinfo.get_time())

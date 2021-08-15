@@ -5,7 +5,7 @@ Assitente Virtual Simplificada e Personalizável criada em Python.
 Requerimentos:
 <ul>
 <li>Reconhecedor de Voz: Google (online) e Vosk (offline)</li>
-<li>Síntese de Voz</li>
+<li>Síntese de Voz: Pyttsx3</li>
 <li>Inteligência Artificial</li>
 <li>------------------------</li>
 <li>------------------------</li>
